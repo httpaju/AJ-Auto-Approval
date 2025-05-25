@@ -26,7 +26,7 @@ async def start(client: Client, message: Message):
         ]
     ]
     await message.reply_text(
-        f"**__Hello {message.from_user.mention}, I am the Auto Approver Join Request Bot!__**\n\n"
+        f"**__Hello {message.from_user.mention}, I am the AJ Auto Approver Join Request Bot!__**\n\n"
         f"✅ Just [add me to your group/channel](https://t.me/{approvedbot.username}?startgroup=true) "
         f"and I will handle join requests automatically.\n\n"
         f"🔗 Repo: https://github.com/httpaju/AJ-Auto-Approval",
