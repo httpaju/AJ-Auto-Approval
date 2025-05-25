@@ -33,4 +33,4 @@ async def autoapprove(client: pr0fess0r_99, message: ChatJoinRequest):
     #   print("Welcome....")
 
 print("Auto Approved Bot")
-pr0fess0r_99.run()
+run()
