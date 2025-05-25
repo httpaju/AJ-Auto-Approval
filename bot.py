@@ -1,6 +1,39 @@
+import socket
+import struct
+import time
+import sys
+
+def sync_ntp_time(host="pool.ntp.org"):
+    try:
+        port = 123
+        buf = 1024
+        address = (host, port)
+        msg = b'\x1b' + 47 * b'\0'
+
+        # connect to NTP server
+        client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        client.settimeout(5)
+        client.sendto(msg, address)
+        msg, address = client.recvfrom(buf)
+
+        t = struct.unpack("!12I", msg)[10]
+        t -= 2208988800  # convert NTP time to UNIX time
+        local_time = time.time()
+        drift = t - local_time
+
+        # if drift is significant, wait to let system catch up
+        if abs(drift) > 5:
+            print(f"[Time Sync] System clock is off by {drift:.2f} seconds. Waiting...")
+            time.sleep(abs(drift))
+    except Exception as e:
+        print(f"[Time Sync] Failed to sync time: {e}")
+
+sync_ntp_time()
+
 from os import environ
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message, ChatJoinRequest
+
 
 pr0fess0r_99 = Client(
     "Auto Approved Bot",
